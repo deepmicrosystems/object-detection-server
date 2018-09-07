@@ -1,8 +1,8 @@
 import numpy as np
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 import io
 from PIL import Image
-
+import json
 from libs.image_processor.imageprocessor import ImageProcessor
 
 # Some globals
@@ -10,12 +10,14 @@ detect = ImageProcessor(path_to_model='ssdlite_mobilenet_v2_coco_2018_05_09/froz
                         path_to_labels='libs/object_detection/data/mscoco_label_map.pbtxt',
                         model_name='ssdlite_mobilenet_v2_coco_2018_05_09')
 
-index_to_cat = {
-    1: 'person',
+index_to_string = {
     3: 'car',
     6: 'bus',
-    8: 'truck'
-                }
+    8: 'truck',
+    1: 'person',
+    10: "traffic light"
+}
+
 
 # Flask App Globals
 app = Flask(__name__)
@@ -65,29 +67,32 @@ def predict():
             # returned predictions
             # Filter just car detections.
             for i, b in enumerate(boxes[0]):
-                #        person  1       car    3                bus   6               truck   8
-                if scores[0][i] >= 0.3:
+                if int(classes[0][i]) in index_to_string:
+                    if scores[0][i] >= 0.3:
 
-                    x0 = int(boxes[0][i][3] * image.shape[1])
-                    y0 = int(boxes[0][i][2] * image.shape[0])
+                        x0 = int(boxes[0][i][3] * image.shape[1])
+                        y0 = int(boxes[0][i][2] * image.shape[0])
 
-                    x1 = int(boxes[0][i][1] * image.shape[1])
-                    y1 = int(boxes[0][i][0] * image.shape[0])
+                        x1 = int(boxes[0][i][1] * image.shape[1])
+                        y1 = int(boxes[0][i][0] * image.shape[0])
 
-                    r = {
-                        'coord': {
-                            'xmin': x0, 'ymin': y0,
-                            'xmax': x1, 'ymax': y1
-                        },
-                        'class': classes[0][i],
-                        'probability': scores[0][i]
-                    }
+                        r = {
+                            'coord': {
+                                'xmin': x0, 'ymin': y0,
+                                'xmax': x1, 'ymax': y1
+                            },
+                            'class': index_to_string[int(classes[0][i])],
+                            'probability': float(scores[0][i])
+                        }
 
-                    data["predictions"].append(r)
+                        data["predictions"].append(r)
 
-            # indicate that the request was a success
-            data["success"] = True
-            return jsonify(str(data))
+                # indicate that the request was a success
+                data["success"] = True
+                resp = Response(response=json.dumps(data),
+                                status=200,
+                                mimetype="application/json")
+                return resp
 
 
 if __name__ == '__main__':
