@@ -1,0 +1,5 @@
+.idea
+.ipynb_checkpoints
+.git
+__pycache__
+ssdlite_mobilenet_v2_coco_2018_05_09/
