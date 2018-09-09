@@ -14,8 +14,10 @@ index_to_string = {
     10: "traffic light"
 }
 
-detect = None
-
+# Some globals
+detect = ImageProcessor(path_to_model='ssdlite_mobilenet_v2_coco_2018_05_09/frozen_inference_graph.pb',
+                        path_to_labels='libs/object_detection/data/mscoco_label_map.pbtxt',
+                        model_name='ssdlite_mobilenet_v2_coco_2018_05_09')
 # Flask App Globals
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -94,10 +96,7 @@ def predict():
 
 
 if __name__ == '__main__':
-    # Some globals
-    detect = ImageProcessor(path_to_model='ssdlite_mobilenet_v2_coco_2018_05_09/frozen_inference_graph.pb',
-                            path_to_labels='libs/object_detection/data/mscoco_label_map.pbtxt',
-                            model_name='ssdlite_mobilenet_v2_coco_2018_05_09')
+
     detect.setup()
     time.sleep(30)
     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
