@@ -3,12 +3,8 @@ from flask import Flask, render_template, request, jsonify, Response
 import io
 from PIL import Image
 import json
+import time
 from libs.image_processor.imageprocessor import ImageProcessor
-
-# Some globals
-detect = ImageProcessor(path_to_model='ssdlite_mobilenet_v2_coco_2018_05_09/frozen_inference_graph.pb',
-                        path_to_labels='libs/object_detection/data/mscoco_label_map.pbtxt',
-                        model_name='ssdlite_mobilenet_v2_coco_2018_05_09')
 
 index_to_string = {
     3: 'car',
@@ -18,6 +14,7 @@ index_to_string = {
     10: "traffic light"
 }
 
+detect = None
 
 # Flask App Globals
 app = Flask(__name__)
@@ -42,6 +39,7 @@ def index():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    global detect
     # initialize the data dictionary that will be returned from the
     # view
     data = {"success": False}
@@ -96,6 +94,11 @@ def predict():
 
 
 if __name__ == '__main__':
+    # Some globals
+    detect = ImageProcessor(path_to_model='ssdlite_mobilenet_v2_coco_2018_05_09/frozen_inference_graph.pb',
+                            path_to_labels='libs/object_detection/data/mscoco_label_map.pbtxt',
+                            model_name='ssdlite_mobilenet_v2_coco_2018_05_09')
     detect.setup()
+    time.sleep(30)
     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
 
