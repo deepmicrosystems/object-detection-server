@@ -87,17 +87,15 @@ def predict():
 
                         data["predictions"].append(r)
 
-                # indicate that the request was a success
-                data["success"] = True
-                resp = Response(response=json.dumps(data),
-                                status=200,
-                                mimetype="application/json")
-                return resp
+            resp = Response(response=json.dumps(data),
+                            status=200,
+                            mimetype="application/json")
+            return resp
 
 
 if __name__ == '__main__':
 
     detect.setup()
     time.sleep(30)
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    app.run(debug=True, host='0.0.0.0', threaded=True)
 
