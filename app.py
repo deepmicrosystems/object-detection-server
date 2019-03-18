@@ -1,3 +1,8 @@
+"""
+How to use it
+$ curl -X POST -F image=@dog.jpg 'http://localhost:5000/predict'
+"""
+
 import numpy as np
 from flask import Flask, render_template, request, jsonify, Response
 import io
@@ -5,6 +10,8 @@ from PIL import Image
 import json
 import time
 from libs.image_processor.imageprocessor import ImageProcessor
+
+
 
 index_to_string = {
     3: 'car',
@@ -86,7 +93,10 @@ def predict():
                         }
 
                         data["predictions"].append(r)
-
+                        
+            if len(data['predictions']) > 0:
+                data['success'] = True
+        
             resp = Response(response=json.dumps(data),
                             status=200,
                             mimetype="application/json")
@@ -97,5 +107,5 @@ if __name__ == '__main__':
 
     detect.setup()
     time.sleep(30)
-    app.run(debug=True, host='0.0.0.0', threaded=True)
+    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
 

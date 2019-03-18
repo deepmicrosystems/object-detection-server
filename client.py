@@ -1,13 +1,3 @@
-# FlaskObjectDetection - TensorFlow
-
-[![](images/logo.png)](https://www.tensorflow.org/)
-
-## Using
-
-
-Use the `client.py` 
-
-```python
 # import the necessary packages
 import requests
 
@@ -31,10 +21,3 @@ if r["success"]:
 # otherwise, the request failed
 else:
     print("Request failed")
-```
-
-...or from the terminal with curl:
-
-```console
-$ curl -X POST -F image=@car.jpg 'http://localhost:5000/predict'
-```
