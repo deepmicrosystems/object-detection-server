@@ -1,7 +1,26 @@
 # FlaskObjectDetection - TensorFlow
 
 [![](images/logo.png)](https://www.tensorflow.org/)
+## Installation
 
+Run the `requirements.txt` if you are in a new enviroment.
+For Ubuntu with Anaconda:
+```
+$ pip install -r requirements
+```
+## Install tensorflow 1.11 for raspberry pi3
+Install tensorflow for raspberry with:
+
+```console
+$ wget -O tensorflow-1.11.0-cp35-cp35m-linux_armv7l.whl #https://github.com/PINTO0309/Tensorflow-bin/raw/master/tensorflow-1.11.#0-cp35-cp35m-linux_armv7l_jemalloc.whl
+$ pip3 install tensorflow-1.11.0-cp35-cp35m-linux_armv7l.whl
+
+```
+for  raspberry pi3:
+
+```
+$ pip3 install -r requirements
+```
 ## USE
 
 ### Serser side.
