@@ -2,8 +2,20 @@
 
 [![](images/logo.png)](https://www.tensorflow.org/)
 
-## Using
+## USE
 
+### Serser side.
+
+Run the script:
+
+```
+$ python app.py
+```
+
+for start the server, the server will be available in `http://localhost:5000/predict` waiting for the POST requests.
+
+
+### Client side.
 
 Use the `client.py` 
 
