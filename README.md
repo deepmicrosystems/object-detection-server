@@ -12,7 +12,7 @@ $ pip install -r requirements
 Install tensorflow for raspberry with:
 
 ```console
-$ wget -O tensorflow-1.11.0-cp35-cp35m-linux_armv7l.whl #https://github.com/PINTO0309/Tensorflow-bin/raw/master/tensorflow-1.11.#0-cp35-cp35m-linux_armv7l_jemalloc.whl
+$ wget -O tensorflow-1.11.0-cp35-cp35m-linux_armv7l.whl https://github.com/PINTO0309/Tensorflow-bin/raw/master/tensorflow-1.11.#0-cp35-cp35m-linux_armv7l_jemalloc.whl
 $ pip3 install tensorflow-1.11.0-cp35-cp35m-linux_armv7l.whl
 
 ```
