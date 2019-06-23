@@ -24,67 +24,38 @@ from object_detection.utils import visualization_utils as vis_util
 
 
 
-class SSDProcessor(object):
+class SSDProcessor:
     """
         Performs object detection on an image
     """
-    PATH_TO_MODEL = os.path.join(os.path.dirname(__file__),'..',
-                        'model',
-                        'ssdlite_mobilenet_v2_kitti', #'ssdlite_mobilenet_v2_cvat_cars', 
-                        'frozen_inference_graph.pb')
-
-    PATH_TO_LABELS = os.path.join(os.path.dirname(__file__),
-                        'object_detection',
-                        'data',
-                        'kitti_label_map.pbtxt') #  'car_label_map.pbtxt')   #'mscoco_label_map.pbtxt')
-
-    LINK_TO_DOWNLOAD_MODEL = "http://download.tensorflow.org/models/object_detection/ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz"
-    
-    def __init__(self, path_to_model=None, path_to_labels=None, model_name=None):
+    def __init__(self, model):
         """
         Path to frozen detection graph. This is the actual model that is used for the object detection.
         strings used to add correct label for each box.
         """
-        self._path_to_model = self.PATH_TO_MODEL
-        self._path_to_labels = self.PATH_TO_LABELS
-        self._num_classes = 90
-        self._detection_graph = None
+        self._path_to_model = model.PATH_TO_MODEL
+        self._path_to_labels = model.PATH_TO_LABELS
+        self._num_classes = model.NUM_CLASSES
+        self._index_to_string=model.INDEX_TO_STRING
+        self._mod_labels = model.MOD_LABELS
         self._labels = dict()
+        self._detection_graph = None
+
         self._image = None
         self._boxes = None
         self._classes = None
         self._scores = None
         self._num = None
+
         self._logger = None
         self._session = None
+
         self.image_tensor = None
         self.detection_boxes = None
         self.detection_scores = None
         self.detection_classes = None
         self.num_detections = None
 
-        self.index_to_string = {
-            3: 'car',
-            6: 'bus',
-            8: 'truck',
-            1: 'person',
-            10: 'traffic light'
-        }
-
-        """
-        self._mod_labels = {
-            3:  {'name': 'car', 'id': 3},
-            6:  {'name': 'bus', 'id': 6},
-            8:  {'name': 'truck', 'id': 8},
-            1:  {'name': 'person', 'id': 1},
-            10: {'name': 'traffic light', 'id': 10}
-        }
-        """
-
-        self._mod_labels = {
-            1:  {'name': 'car', 'id': 1},
-            2:  {'name': 'pedestrian', 'id':2}
-        }
 
     def setup(self):
         """
@@ -131,15 +102,15 @@ class SSDProcessor(object):
         if not Path(path).exists():
             raise IOError('model file missing: {}'.format(str(path)))
  
-        with tf.gfile.GFile(path, 'rb') as fid:
-            graph_def = tf.GraphDef()
+        with tf.io.gfile.GFile(path, 'rb') as fid:
+            graph_def = tf.compat.v1.GraphDef()
             graph_def.ParseFromString(fid.read())
 
         with tf.Graph().as_default() as graph:
             tf.import_graph_def(graph_def, name='')
 
         self._detection_graph = graph
-        self._session = tf.Session(graph=self._detection_graph)
+        self._session = tf.compat.v1.Session(graph=self._detection_graph)
 
         # Definite input and output Tensors for detection_graph
         self.image_tensor = self._detection_graph.get_tensor_by_name('image_tensor:0')
@@ -228,14 +199,14 @@ class SSDProcessor(object):
                 min_score_thresh=threshold)
         else:
             vis_util.visualize_boxes_and_labels_on_image_array(
-                annotated_image,
-                np.squeeze(boxes),
-                np.squeeze(classes).astype(np.int32),
-                np.squeeze(scores),
-                self._mod_labels,
-                use_normalized_coordinates=True,
-                line_thickness=8,
-                min_score_thresh=threshold)
+                            annotated_image,
+                            np.squeeze(boxes),
+                            np.squeeze(classes).astype(np.int32),
+                            np.squeeze(scores),
+                            self._mod_labels,
+                            use_normalized_coordinates=True,
+                            line_thickness=8,
+                            min_score_thresh=threshold)
 
         return annotated_image
 
@@ -265,7 +236,7 @@ class SSDProcessor(object):
         if len(num) > 0:
             for i in range(int(num[-1])): #enumerate(boxes[0]):
                 _id = int(classes[0][i])
-                if _id in self.index_to_string:
+                if _id in self._index_to_string:
                     if scores[0][i] >= min_score_thresh:
 
                         x0 = int(boxes[0][i][3] * frame.shape[1])
@@ -279,7 +250,7 @@ class SSDProcessor(object):
                                 'xmin': x0, 'ymin': y0,
                                 'xmax': x1, 'ymax': y1
                             },
-                            'class': self.index_to_string[_id],          #ObjectDetection.index_to_string[id],
+                            'class': self._index_to_string[_id],          #ObjectDetection.index_to_string[id],
                             'probability': float(scores[0][i])
                         }
                         detected_objects["success"] = True
@@ -296,9 +267,12 @@ class SSDProcessor(object):
             detected_objects['num'] = int(num[-1])
             
             if draw_box:
-                frame = self.annotate_image(frame, boxes, classes, scores, 
-                                    threshold=min_score_thresh, 
-                                    full_labels=False)
+                frame = self.annotate_image(frame, 
+                                            boxes, 
+                                            classes, 
+                                            scores, 
+                                            threshold=min_score_thresh, 
+                                            full_labels=False)
             return detected_objects, frame
         else:
             detected_objects["success"] = False

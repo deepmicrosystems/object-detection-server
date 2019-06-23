@@ -9,26 +9,46 @@ import io
 from PIL import Image
 import json
 import time
-from libs.image_processor.imageprocessor import ImageProcessor
+from libs.ssd.ssd_processor import SSDProcessor
+from libs.ssd.ssd_processor.models import KittiModel
 
 
+kitti_model = KittiModel()
 
-index_to_string = {
-    3: 'car',
-    6: 'bus',
-    8: 'truck',
-    1: 'person',
-    10: "traffic light"
-}
+MIN_SCORE_THRESH = 0.3
+DRAW_BOX = True
 
-# Some globals
-detect = ImageProcessor(path_to_model='ssdlite_mobilenet_v2_coco_2018_05_09/frozen_inference_graph.pb',
-                        path_to_labels='libs/object_detection/data/mscoco_label_map.pbtxt',
-                        model_name='ssdlite_mobilenet_v2_coco_2018_05_09')
+
+detect = SSDProcessor(model = kitti_model)
+detect.setup()
+
+
 # Flask App Globals
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 
+
+def _object_detection(image_np, min_score, draw_box):
+
+    detection = None
+    detection_with_filter = None
+
+    detection = detect.detect(image_np)
+
+    boxes = detection['boxes']
+    scores = detection['scores']
+    classes = detection['classes']
+    num = detection['num']
+    
+    detection_with_filter, frame = detect.annotate_image_and_filter(image_np,
+                                            boxes, 
+                                            classes, 
+                                            scores, 
+                                            num, 
+                                            min_score, 
+                                            draw_box)
+
+    return detection_with_filter, frame
 
 def load_image_into_numpy_array(image):
     (im_width, im_height) = image.size
@@ -64,42 +84,17 @@ def predict():
 
             # preprocess the image and prepare it for classification
             image = prepare_image(image)
-
-            # classify the input image and then initialize the list
-            # of predictions to return to the client
-            (boxes, scores, classes, num) = detect.detect(image)
-            data["predictions"] = []
-
-            # loop over the results and add them to the list of
-            # returned predictions
-            # Filter just car detections.
-            for i, b in enumerate(boxes[0]):
-                if int(classes[0][i]) in index_to_string:
-                    if scores[0][i] >= 0.3:
-
-                        x0 = int(boxes[0][i][3] * image.shape[1])
-                        y0 = int(boxes[0][i][2] * image.shape[0])
-
-                        x1 = int(boxes[0][i][1] * image.shape[1])
-                        y1 = int(boxes[0][i][0] * image.shape[0])
-
-                        r = {
-                            'coord': {
-                                'xmin': x0, 'ymin': y0,
-                                'xmax': x1, 'ymax': y1
-                            },
-                            'class': index_to_string[int(classes[0][i])],
-                            'probability': float(scores[0][i])
-                        }
-
-                        data["predictions"].append(r)
-                        
-            if len(data['predictions']) > 0:
-                data['success'] = True
-        
-            resp = Response(response=json.dumps(data),
-                            status=200,
-                            mimetype="application/json")
+            
+            detection_with_filter, frame = _object_detection(image, MIN_SCORE_THRESH, DRAW_BOX)
+            
+            if detection_with_filter['success']:
+                pass
+            else:
+                detection_with_filter['success'] = False
+                
+            resp = Response(response=json.dumps(detection_with_filter),
+                                status=200,
+                                mimetype="application/json")
             return resp
 
 
