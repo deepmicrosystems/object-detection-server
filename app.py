@@ -103,13 +103,7 @@ def predict_video():
         if len(detection_with_filter["predictions"]) > 0:
             db_path = os.path.join(os.path.dirname(__file__),   
                                     "libs", "db", "test_sqlite.db" )
-            my_db.open(db_name=db_path)
 
-            image_path, date = image_saver(frame, PATH_TO_SAVE_IMG)
-
-            done = save_in_db(my_db,detection_with_filter,image_path, date)
-            
-            print('SAVED?', done)
             detection_with_filter['success'] = True
         else:
             detection_with_filter['success'] = False

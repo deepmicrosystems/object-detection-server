@@ -17,13 +17,13 @@ def image_saver(image, PATH_TO_SAVE_IMG):
 
 def save_in_db(db, detections, image_path, date):
     finish=False
-    for d in detections["predictions"]:
-        db.dynamic_data_entry(image_path=image_path,
-                        detection= d["coord"], 
-                        obj_class=d["class"],
-                        prob = d["probability"],
-                        date=date)
-        finish = True
+
+    db.dynamic_data_entry(image_path=image_path,
+                    detection= detections["coord"], 
+                    obj_class=detections["class"],
+                    prob = detections["probability"],
+                    date=date)
+    finish = True
     return finish
 
 
