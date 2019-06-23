@@ -37,40 +37,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 
 
-def _object_detection(image_np, min_score, draw_box):
-
-    detection = None
-    detection_with_filter = None
-
-    detection = detect.detect(image_np)
-
-    boxes = detection['boxes']
-    scores = detection['scores']
-    classes = detection['classes']
-    num = detection['num']
-    
-    detection_with_filter, frame = detect.annotate_image_and_filter(image_np,
-                                            boxes, 
-                                            classes, 
-                                            scores, 
-                                            num, 
-                                            min_score, 
-                                            draw_box)
-
-    return detection_with_filter, frame
-
-def load_image_into_numpy_array(image):
-    (im_width, im_height) = image.size
-    return np.array(image.getdata()).reshape(
-        (im_height, im_width, 3)).astype(np.uint8)
-
-
-
-def prepare_image(image):
-    image = np.asarray(image)
-    return image
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -91,11 +57,12 @@ def predict():
             # read the image in PIL format
             image = image_path_request.read()
             image = Image.open(io.BytesIO(image))
+            
 
             # preprocess the image and prepare it for classification
             image = prepare_image(image)
             
-            detection_with_filter, frame = _object_detection(image, MIN_SCORE_THRESH, DRAW_BOX)
+            detection_with_filter, frame = object_detection(image, MIN_SCORE_THRESH, DRAW_BOX, detect)
             
             if detection_with_filter['success']:
                 db_path = os.path.join(os.path.dirname(__file__),   
@@ -116,9 +83,46 @@ def predict():
             return resp
 
 
+
+@app.route("/predict_video", methods=["POST"])
+def predict_video():
+    global detect
+    # initialize the data dictionary that will be returned from the
+    # view
+    detection_with_filter = {}
+    # ensure an image was properly uploaded to our endpoint
+    if request.method == "POST":
+        nparr = np.fromstring(request.data, np.uint8)
+        img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)            
+
+        # preprocess the image and prepare it for classification
+        image = prepare_image(img_np)
+        
+        detection_with_filter, frame = object_detection(image, MIN_SCORE_THRESH, DRAW_BOX, detect)
+        
+        if len(detection_with_filter["predictions"]) > 0:
+            db_path = os.path.join(os.path.dirname(__file__),   
+                                    "libs", "db", "test_sqlite.db" )
+            my_db.open(db_name=db_path)
+
+            image_path, date = image_saver(frame, PATH_TO_SAVE_IMG)
+
+            done = save_in_db(my_db,detection_with_filter,image_path, date)
+            
+            print('SAVED?', done)
+            detection_with_filter['success'] = True
+        else:
+            detection_with_filter['success'] = False
+            
+        resp = Response(response=json.dumps(detection_with_filter),
+                            status=200,
+                            mimetype="application/json")
+        return resp
+
+
 if __name__ == '__main__':
 
     detect.setup()
-    time.sleep(30)
+    time.sleep(15)
     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
 
