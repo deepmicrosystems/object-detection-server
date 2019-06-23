@@ -8,23 +8,32 @@ from flask import Flask, render_template, request, jsonify, Response
 import io
 from PIL import Image
 import json
+import os
 import time
+import datetime
+
 from libs.ssd.ssd_processor import SSDProcessor
 from libs.ssd.ssd_processor.models import KittiModel
 
+from libs.tools import *
+
+from libs.db.db_handler import DataBaseManager
 
 kitti_model = KittiModel()
-
-MIN_SCORE_THRESH = 0.3
+MIN_SCORE_THRESH = 0.6
 DRAW_BOX = True
 
-
+PATH_TO_SAVE_IMG = os.path.join(os.path.dirname(__file__),"images/")
 detect = SSDProcessor(model = kitti_model)
 detect.setup()
 
 
+# DB
+my_db = DataBaseManager()
+
 # Flask App Globals
 app = Flask(__name__)
+
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 
 
@@ -54,6 +63,7 @@ def load_image_into_numpy_array(image):
     (im_width, im_height) = image.size
     return np.array(image.getdata()).reshape(
         (im_height, im_width, 3)).astype(np.uint8)
+
 
 
 def prepare_image(image):
@@ -88,7 +98,15 @@ def predict():
             detection_with_filter, frame = _object_detection(image, MIN_SCORE_THRESH, DRAW_BOX)
             
             if detection_with_filter['success']:
-                pass
+                db_path = os.path.join(os.path.dirname(__file__),   
+                                        "libs", "db", "test_sqlite.db" )
+                my_db.open(db_name=db_path)
+
+                image_path, date = image_saver(frame, PATH_TO_SAVE_IMG)
+
+                done = save_in_db(my_db,detection_with_filter,image_path, date)
+                
+                print('SAVED?', done)
             else:
                 detection_with_filter['success'] = False
                 
