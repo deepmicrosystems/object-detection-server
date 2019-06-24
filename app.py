@@ -18,19 +18,23 @@ from libs.ssd.ssd_processor.models import KittiModel
 from libs.tools import *
 
 from libs.db.db_handler import DataBaseManager
+from libs.image_processor import ImageProcessor
 
 kitti_model = KittiModel()
 MIN_SCORE_THRESH = 0.6
 DRAW_BOX = True
 
-PATH_TO_SAVE_IMG = os.path.join(os.path.dirname(__file__),"images/")
+PATH_TO_SAVE_IMG = os.path.join(os.path.dirname(__file__), "images/")
 detect = SSDProcessor(model = kitti_model)
 detect.setup()
-
 
 # DB
 my_db = DataBaseManager()
 
+
+# Image processor
+
+imageProcessor = ImageProcessor()
 # Flask App Globals
 app = Flask(__name__)
 
@@ -57,21 +61,23 @@ def predict():
             # read the image in PIL format
             image = image_path_request.read()
             image = Image.open(io.BytesIO(image))
-            
 
             # preprocess the image and prepare it for classification
-            image = prepare_image(image)
-            
-            detection_with_filter, frame = object_detection(image, MIN_SCORE_THRESH, DRAW_BOX, detect)
+            image_np = prepare_image(image_np)
+            image_shape = image_np.shape
+            # TODO
+            # handle /endpoint for plate recognition
+            # separate /detection endpoint 
+            # separete db logic for plates and detections
+            detection_with_filter, image_np_lr_draw = object_detection(image_np_lr, MIN_SCORE_THRESH, DRAW_BOX, detect)
             
             if detection_with_filter['success']:
                 db_path = os.path.join(os.path.dirname(__file__),   
                                         "libs", "db", "test_sqlite.db" )
-                my_db.open(db_name=db_path)
 
-                image_path, date = image_saver(frame, PATH_TO_SAVE_IMG)
+                db_started = imageProcessor.start_modules(my_db, db_path)
 
-                done = save_in_db(my_db,detection_with_filter,image_path, date)
+                state = imageProcessor(db_path, detection_with_filter, image_np_lr_draw, path_to_img, item_id)
                 
                 print('SAVED?', done)
             else:

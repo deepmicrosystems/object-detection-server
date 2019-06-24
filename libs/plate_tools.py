@@ -11,13 +11,14 @@ class PlateRecognition:
 
     @classmethod
     def get_response_openalrp(cls, image_path):
+
         """
         Obtain plate information in image_path input cropped image
         :param image_path: Cropped image
         :return: JSON object as dict, if not possible return empty list
         """
+
         plate_data = {'plate_info': {}}
-        # TODO replace this trys with status response behavior
         try:
             # Obtain response from OpenALP API for image_path input
             response = cls.api_call_plates_openalpr(image_path)
@@ -43,19 +44,23 @@ class PlateRecognition:
             return plate_data
 
     @classmethod
-    def get_plates(cls, detected_objects):
+    def get_plates(cls, img_path_crop):
         """
         Obtain plates information and append it to dictionary for next process
         :param img_objs: image dict with information of cropped images
-        :return: JSON as dict with plate information
+        :return: {
+            'path': img_path_crop,
+            'plate': {'plate': 'NOPLATE'},
+            'box': 0,
+            'prob': 0
+        }
         """
 
         # Obtain response from API
-        print('THIS>>>',  detected_objects)
-        read_plate_information = cls.get_response_openalrp(
-            detected_objects['detection'][0]['path_to_crop']
-        )
-        _plate_information = {}
+        read_plate_information = cls.get_response_openalrp( img_path_crop  )
+
+        plate_information = {}
+
         if read_plate_information['success'] is True:
 
             plate = read_plate_information['plate_info']['plate']
@@ -63,25 +68,27 @@ class PlateRecognition:
             box = read_plate_information['plate_info']['box']
 
             detection = {
-                'path': detected_objects['detection'][0]['path_to_crop'],
+                'path': img_path_crop,
                 'plate': plate,
                 'box': box,
                 'prob': prob
             }
-            _plate_information['detection'] = detection
-            _plate_information['success'] = True
+
+            plate_information['detection'] = detection
+            plate_information['success'] = True
 
         else:
             detection = {
-                'path': detected_objects['detection'][0]['path_to_crop'],
+                'path': img_path_crop,
                 'plate': {'plate': 'NOPLATE'},
                 'box': 0,
                 'prob': 0
             }
-            _plate_information['detection'] = detection
-            _plate_information['success'] = False
 
-        return _plate_information
+            plate_information['detection'] = detection
+            plate_information['success'] = False
+
+        return plate_information
 
     @staticmethod
     def write_plate(path_to_image='', region=None, plate=''):

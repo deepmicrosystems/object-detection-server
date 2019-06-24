@@ -19,10 +19,15 @@ class DataBaseManager:
         except Exception as e:
             print(f'Cannot connect to db or {e}')
 
-    def create_table(self):
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS \
-                         detections( w REAL, h REAL, x REAL, y REAL, prob REAL,\
-                                     datestamp TEXT, class TEXT, imgPath TEXT)")   
+    def create_table(self, case):
+        if (case == "detections"):
+            self.cursor.execute("CREATE TABLE IF NOT EXISTS \
+                         detections( item_id REAL, w REAL, h REAL, x REAL, y REAL, prob REAL,\
+                                     datestamp TEXT, class TEXT, imgPath TEXT)") 
+        elif (case == "plates"):
+            self.cursor.execute("CREATE TABLE IF NOT EXISTS \
+                         plates( item_id REAL, w REAL, h REAL, x REAL, y REAL, prob REAL,\
+                                     datestamp TEXT, imgPath TEXT)")   
     def close(self):
         self.cursor.close()
         self.conn.close()
@@ -34,7 +39,7 @@ class DataBaseManager:
     # def __exit__(self,exc_type,exc_value,traceback):
     #     self.close()
 
-    def dynamic_data_entry(self, image_path, detection, prob, obj_class, date):
+    def dynamic_data_entry(self, item_id, image_path, detection, prob, obj_class, date):
 
         x = detection["xmin"]
         y = detection["ymin"]
@@ -42,9 +47,23 @@ class DataBaseManager:
         w = detection["ymax"]
 
         self.cursor.execute("INSERT INTO detections \
-                        (w, h, x, y, prob, datestamp, class, imgPath) \
+                        (item_id, w, h, x, y, prob, datestamp, class, imgPath) \
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        (item_id, w, h, x, y, prob, date, obj_class, image_path))
+        self.conn.commit()
+        #self.close()
+
+    def dynamic_data_entry_plates(self,image_path_crop, detection, plate, prob , date,  item_id):
+        
+        x = detection["xmin"]
+        y = detection["ymin"]
+        h = detection["xmax"]
+        w = detection["ymax"]
+
+        self.cursor.execute("INSERT INTO plates \
+                        (item_id, w, h, x, y, prob, datestamp, imgPath) \
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                        (w, h, x, y, prob, date, obj_class, image_path))
+                        (item_id, w, h, x, y, prob, date, image_path_crop))
 
         self.conn.commit()
         #self.close()
