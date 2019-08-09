@@ -77,6 +77,30 @@ class SSDProcessor:
         # run a detection once, because first model run is always slow
         self.detect(np.ones((300, 300, 3), dtype=np.uint8))
 
+    def object_detection(self, image_np, min_score, draw_box):
+        """
+        Filters detection according to interests
+        """
+        detection = None
+        detection_with_filter = None
+    
+        detection = self.detect(image_np)
+    
+        boxes = detection['boxes']
+        scores = detection['scores']
+        classes = detection['classes']
+        num = detection['num']
+        
+        detection_with_filter, frame = self.annotate_image_and_filter(image_np,
+                                                boxes, 
+                                                classes, 
+                                                scores, 
+                                                num, 
+                                                min_score, 
+                                                draw_box)
+    
+        return detection_with_filter, frame
+
     def download_model(self, url):
         """
             Download a model file from the url and unzip it
@@ -101,16 +125,19 @@ class SSDProcessor:
         """
         if not Path(path).exists():
             raise IOError('model file missing: {}'.format(str(path)))
- 
-        with tf.io.gfile.GFile(path, 'rb') as fid:
-            graph_def = tf.compat.v1.GraphDef()
+
+        #with tf.io.gfile.GFile(path, 'rb') as fid:
+        with tf.gfile.GFile(path, 'rb') as fid:
+            #graph_def = tf.compat.v1.GraphDef()
+            graph_def = tf.GraphDef()
             graph_def.ParseFromString(fid.read())
 
         with tf.Graph().as_default() as graph:
             tf.import_graph_def(graph_def, name='')
 
         self._detection_graph = graph
-        self._session = tf.compat.v1.Session(graph=self._detection_graph)
+        #self._session = tf.compat.v1.Session(graph=self._detection_graph)
+        self._session = tf.Session(graph=self._detection_graph)
 
         # Definite input and output Tensors for detection_graph
         self.image_tensor = self._detection_graph.get_tensor_by_name('image_tensor:0')
@@ -155,7 +182,11 @@ class SSDProcessor:
         """
 
         # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
+        # For alpha images:
+        image = image[:,:,:3]
+        
         image_np_expanded = np.expand_dims(image, axis=0)
+        print("Expanded: ",image_np_expanded.shape)
 
         # Actual detection.
         (self._boxes, self._scores, self._classes, self._num) = self._session.run([self.detection_boxes, 

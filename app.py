@@ -63,7 +63,7 @@ def predict():
             image = Image.open(io.BytesIO(image))
 
             # preprocess the image and prepare it for classification
-            image_np = prepare_image(image_np)
+            image_np = prepare_image(image)
             image_shape = image_np.shape
             # TODO
             # handle /endpoint for plate recognition

@@ -17,7 +17,7 @@ class DataBaseManager:
             self.create_table()
 
         except Exception as e:
-            print(f'Cannot connect to db or {e}')
+            print('Cannot connect to db or {}'.format(e))
 
     def create_table(self, case):
         if (case == "detections"):

@@ -32,7 +32,7 @@ class ImageProcessor:
                                 )
             finish = True
         except Exception as e:
-            print(f'[INFO ERROR] Cannot sasave_in_dbve db for image {image_path} or {e}')
+            print('[INFO ERROR] Cannot save_in_dbve db for image {} or {}'.format(image_path,e))
         
         return finish
     
@@ -49,7 +49,7 @@ class ImageProcessor:
                                 )
             finish = True
         except Exception as e:
-            print(f'[INFO ERROR] Cannot save db for image {image_path_crop} or {e}')
+            print('[INFO ERROR] Cannot save db for image {} or {}'.format(image_path_crop,e))
         
         return finish
 
@@ -61,7 +61,7 @@ class ImageProcessor:
         unix = int(time.time())
         date = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
 
-        image_path = path_to_img + f"{date}.jpg"
+        image_path = path_to_img + "{}.jpg".format(date)
 
         print('IMAGE PATH is ' + image_path)
         
