@@ -59,8 +59,9 @@ if __name__ == "__main__":
 
         print(drawing_frame.shape)
         print(detections)
+        str_datetime = datetime.now().strftime("%Y%m%d_%H%M%S")
+        print("Current time: ",str_datetime)
         if len(detections["predictions"])>0:
-            str_datetime = datetime.now().strftime("%Y%m%d_%H%M%S")
             detected_object = detections["predictions"][0]["class"]
             print("Found {}".format(detected_object))
             print("Original shape: ",frame.shape)
