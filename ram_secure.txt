@@ -1,0 +1,23 @@
+root - 2019-08-10 12:17:56,723 : Started RAM Secure at: 2019-08-10
+root - 2019-08-10 12:18:26,723 : Datetime: 12:18:26, memory at 54.9% %
+root - 2019-08-10 12:18:56,723 : Datetime: 12:18:56, memory at 69.9% %
+root - 2019-08-10 12:19:26,724 : Datetime: 12:19:26, memory at 69.9% %
+root - 2019-08-10 12:19:56,724 : Datetime: 12:19:56, memory at 71.0% %
+root - 2019-08-10 12:20:26,724 : Datetime: 12:20:26, memory at 70.9% %
+root - 2019-08-10 12:20:56,724 : Datetime: 12:20:56, memory at 71.4% %
+root - 2019-08-10 12:21:26,724 : Datetime: 12:21:26, memory at 70.8% %
+root - 2019-08-10 12:21:56,724 : Datetime: 12:21:56, memory at 71.1% %
+root - 2019-08-10 12:22:26,725 : Datetime: 12:22:26, memory at 70.7% %
+root - 2019-08-10 12:22:56,725 : Datetime: 12:22:56, memory at 71.1% %
+root - 2019-08-10 12:23:26,725 : Datetime: 12:23:26, memory at 70.7% %
+root - 2019-08-10 12:23:56,726 : Datetime: 12:23:56, memory at 70.7% %
+root - 2019-08-10 12:24:26,726 : Datetime: 12:24:26, memory at 70.8% %
+root - 2019-08-10 12:24:56,726 : Datetime: 12:24:56, memory at 70.9% %
+root - 2019-08-10 12:25:26,727 : Datetime: 12:25:26, memory at 70.9% %
+root - 2019-08-10 12:25:56,727 : Datetime: 12:25:56, memory at 70.9% %
+root - 2019-08-10 12:26:26,727 : Datetime: 12:26:26, memory at 70.9% %
+root - 2019-08-10 12:26:56,728 : Datetime: 12:26:56, memory at 70.9% %
+root - 2019-08-10 12:27:26,728 : Datetime: 12:27:26, memory at 70.9% %
+root - 2019-08-10 12:27:56,728 : Datetime: 12:27:56, memory at 70.8% %
+root - 2019-08-10 12:28:26,728 : Datetime: 12:28:26, memory at 70.8% %
+root - 2019-08-10 12:28:56,729 : Datetime: 12:28:56, memory at 70.8% %

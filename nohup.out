@@ -1,0 +1,301 @@
+2019-08-10 12:18:34.349572: W tensorflow/core/framework/allocator.cc:113] Allocation of 4718592 exceeds 10% of system memory.
+2019-08-10 12:18:35.049445: W tensorflow/core/framework/allocator.cc:113] Allocation of 4718592 exceeds 10% of system memory.
+2019-08-10 12:18:35.049788: W tensorflow/core/framework/allocator.cc:113] Allocation of 4718592 exceeds 10% of system memory.
+2019-08-10 12:18:35.061126: W tensorflow/core/framework/allocator.cc:113] Allocation of 4718592 exceeds 10% of system memory.
+2019-08-10 12:18:35.470729: W tensorflow/core/framework/allocator.cc:113] Allocation of 4718592 exceeds 10% of system memory.
+Expanded:  (1, 300, 300, 3)
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.14
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.90
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.23
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.49
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.91
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.51
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.08
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.51
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.88
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.50
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.09
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.50
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.95
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.58
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.36
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.61
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.70
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.40
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.48
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.62
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.98
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.77
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.68
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.80
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.65
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.63
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.72
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.64
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.76
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.39
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.69
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.42
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.56
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.44
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.51
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.52
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.68
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.33
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.32
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.33
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.69
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.28
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.36
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.33
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.70
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.22
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.66
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.42
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.58
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.38
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.65
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.35
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.35
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.67
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.34
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.64
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.40
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.95
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.69
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.29
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.66
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.22
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.57
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.45
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 1.69
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
+Period time: 2.30
+Expanded:  (1, 240, 320, 3)
+(240, 320, 4)
+{'association': [], 'num': 100, 'predictions': []}
