@@ -182,8 +182,6 @@ class SSDProcessor:
         """
 
         # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
-        # For alpha images:
-        image = image[:,:,:3]
         
         image_np_expanded = np.expand_dims(image, axis=0)
         print("Expanded: ",image_np_expanded.shape)

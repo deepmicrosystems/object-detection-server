@@ -47,6 +47,9 @@ if __name__ == "__main__":
 
     while True:
         ret, frame = miCamara.read()
+        if frame.shape[2] > 3:
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2RGB)
+        
         processing_frame = cv2.resize(frame,(frame.shape[1]//PROCESS_SCALE,frame.shape[0]//PROCESS_SCALE))
         
         #detections = detect.detect(frame)
