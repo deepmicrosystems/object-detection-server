@@ -10,19 +10,23 @@ from libs.ssd.ssd_processor import SSDProcessor
 sys.path.append(os.getenv('HOME')+'/trafficFlow/preview/')
 from playstream import PlayStream
 
-#from libs.ssd.ssd_processor.models import KittiModel
-#kitti_model = KittiModel()
+import libs.ssd.ssd_processor.models as Models
 
-from libs.ssd.ssd_processor.models import MSCOCOModel
-kitti_model = MSCOCOModel()
 
 # Recognize the following arguments to control the program flow
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input",      type = str,  default = None,       help = "Set stream input")
 parser.add_argument("-o", "--output",     type = str,  default = "./output", help = "Set images output")
 parser.add_argument("-s", "--show",       type = bool, default = False,      help = "Do you wish to show image?")
-parser.add_argument("-p", "--proc_scale", type = int,  default = 8,         help = "Set processing factor")
+parser.add_argument("-p", "--proc_scale", type = int,  default = 5,          help = "Set processing factor")
+parser.add_argument("-kt", "--kitty",     type = bool, default = False,      help = "Use experimental Kitty model")
+parser.add_argument("-k", "--kill",       type = int,  default = 0,          help = "Set self kill time")
 args = parser.parse_args()
+
+if args.kitty:
+    kitti_model = Models.KittiModel()
+else:
+    kitti_model = Models.MSCOCOModel()
 
 # Constants
 PROCESS_SCALE = args.proc_scale
@@ -47,6 +51,7 @@ if not os.path.exists(args.output):
 if __name__ == "__main__":
     miCamara = PlayStream(args.input)
     start_time = time()
+    auxiliar_time = start_time
 
     while True:
         ret, frame = miCamara.read()
@@ -115,8 +120,12 @@ if __name__ == "__main__":
             print("Ratio: Good {} Bad: {}".format(good_plates, none_plates))
             counter += 1
 
-        print("Period time: {:0.2f}".format(time()-start_time))
-        start_time = time()
+        print("Period time: {:0.2f}".format(time()-auxiliar_time))
+        auxiliar_time = time()
+
+        if (args.kill) and (auxiliar_time-start_time):
+            print("Self killing app")
+            break
 
         ch = cv2.waitKey(1)
 
