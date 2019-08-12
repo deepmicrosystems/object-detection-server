@@ -10,8 +10,11 @@ from libs.ssd.ssd_processor import SSDProcessor
 sys.path.append(os.getenv('HOME')+'/trafficFlow/preview/')
 from playstream import PlayStream
 
-from libs.ssd.ssd_processor.models import KittiModel
-kitti_model = KittiModel()
+#from libs.ssd.ssd_processor.models import KittiModel
+#kitti_model = KittiModel()
+
+from libs.ssd.ssd_processor.models import MSCOCOModel
+kitti_model = MSCOCOModel()
 
 # Recognize the following arguments to control the program flow
 parser = argparse.ArgumentParser()
